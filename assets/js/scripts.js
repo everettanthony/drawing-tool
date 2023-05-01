@@ -1,6 +1,10 @@
 const canvas = document.querySelector('.draw-canvas');
 const context = canvas.getContext('2d');
 const btnClear = document.querySelector('.btn-clear');
+const xVal = document.querySelector('.val-x');
+const xVal2 = document.querySelector('.val-x2');
+const yVal = document.querySelector('.val-y');
+const yVal2 = document.querySelector('.val-y2');
 let isDrawing = false;
 let x = 0;
 let y = 0;
@@ -33,6 +37,10 @@ function startup() {
             y = 0;
             isDrawing = false;
         }
+    });
+
+    canvas.addEventListener('mouseout', (e) => {
+        isDrawing = false;
     });
 
     btnClear.addEventListener('click', (e) => clearArea());
@@ -68,7 +76,7 @@ function handleMove(evt) {
             context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
             context.lineWidth = '1';
             context.strokeStyle = color;
-            context.lineJoin = "round";
+            context.lineJoin = 'round';
             context.closePath();
             context.stroke();
             ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
@@ -79,6 +87,8 @@ function handleMove(evt) {
 function handleEnd(evt) {
     evt.preventDefault();
     const touches = evt.changedTouches;
+    console.log(touches);
+
 
     for (let i = 0; i < touches.length; i++) {
         const color = 'black';
@@ -127,9 +137,26 @@ function drawLine(context, x1, y1, x2, y2) {
     context.lineTo(x2, y2);
     context.closePath();
     context.stroke();
+
+    updateCanvasInfo(x1, y1, x2, y2);
 }
 
 function clearArea() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    clearCanvasInfo();
+}
+
+function updateCanvasInfo(x1, y1, x2, y2) {
+    xVal.textContent = x1;
+    xVal2.textContent = x2;
+    yVal.textContent = y1;
+    yVal2.textContent = y2;
+}
+
+function clearCanvasInfo() {
+    xVal.textContent = '';
+    xVal2.textContent = '';
+    yVal.textContent = ''; 
+    yVal2.textContent = ''; 
 }

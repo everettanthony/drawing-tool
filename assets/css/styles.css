@@ -1,10 +1,35 @@
-#canvas_div {
-    display: block;
-    margin: 0 auto;
-    overflow-x: auto;
-    text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-canvas {
+.draw {
+  display: block;
+  margin: 0 auto;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.draw-canvas {
   border: 2px solid black;
+}
+
+.draw-info {
+  border: 1px solid #000;
+  margin: 2rem auto 0;
+  padding: 1rem;
+  width: 100px;
+}
+
+.draw-info-item {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+}
+
+.draw-info-item label {
+  font-weight: 700;
+}
+
+.draw-info-item:not(:last-child) {
+  margin-bottom: 1rem;
 }
