@@ -11,6 +11,11 @@ let y = 0;
 let offsetX;
 let offsetY;
 
+const drawSettings = {
+    color: 'black',
+    lineWidth: '1'
+}
+
 function startup() {
     canvas.addEventListener('touchstart', handleStart);
     canvas.addEventListener('touchend', handleEnd);
@@ -67,15 +72,14 @@ function handleMove(evt) {
     const touches = evt.changedTouches;
 
     for (let i = 0; i < touches.length; i++) {
-        const color = 'black';
         const idx = ongoingTouchIndexById(touches[i].identifier);
 
         if (idx >= 0) {
             context.beginPath();
             context.moveTo(ongoingTouches[idx].clientX - offsetX, ongoingTouches[idx].clientY - offsetY);
             context.lineTo(touches[i].clientX - offsetX, touches[i].clientY - offsetY);
-            context.lineWidth = '1';
-            context.strokeStyle = color;
+            context.lineWidth = drawSettings.lineWidth;
+            context.strokeStyle = drawSettings.color;
             context.lineJoin = 'round';
             context.closePath();
             context.stroke();
@@ -87,16 +91,13 @@ function handleMove(evt) {
 function handleEnd(evt) {
     evt.preventDefault();
     const touches = evt.changedTouches;
-    console.log(touches);
-
 
     for (let i = 0; i < touches.length; i++) {
-        const color = 'black';
         let idx = ongoingTouchIndexById(touches[i].identifier);
 
         if (idx >= 0) {
-            context.lineWidth = '1';
-            context.fillStyle = color;
+            context.lineWidth = drawSettings.lineWidth;
+            context.fillStyle = drawSettings.color;
             ongoingTouches.splice(idx, 1);  // remove it; we're done
         }
     }
@@ -130,8 +131,8 @@ function ongoingTouchIndexById(idToFind) {
   
 function drawLine(context, x1, y1, x2, y2) {
     context.beginPath();
-    context.strokeStyle = 'black';
-    context.lineWidth = '1';
+    context.strokeStyle = drawSettings.color;
+    context.lineWidth = drawSettings.lineWidth;
     context.lineJoin = 'round';
     context.moveTo(x1, y1);
     context.lineTo(x2, y2);
