@@ -1,0 +1,10 @@
+#canvas_div {
+    display: block;
+    margin: 0 auto;
+    overflow-x: auto;
+    text-align: center;
+}
+
+canvas {
+  border: 2px solid black;
+}
